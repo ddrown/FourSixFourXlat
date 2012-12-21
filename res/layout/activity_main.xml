@@ -1,0 +1,142 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/TetherStatusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/TetherStatus"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/TetherStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/TetherStatusLabel"
+        android:layout_alignBottom="@+id/TetherStatusLabel"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	<TextView
+        android:id="@+id/ClatStatusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_alignLeft="@+id/TetherStatusLabel"
+        android:layout_below="@+id/TetherStatusLabel"
+        android:text="@string/ClatStatus"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/ClatStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/TetherStatus"
+        android:layout_alignBottom="@+id/ClatStatusLabel"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView
+        android:id="@+id/MobileStatusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ClatStatusLabel"
+        android:layout_below="@+id/ClatStatusLabel"
+        android:layout_marginTop="20dp"
+        android:text="@string/MobileStatus"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView
+        android:id="@+id/MobileStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/MobileStatusLabel"
+        android:layout_alignRight="@+id/ClatStatus"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView
+        android:id="@+id/IPv4AddressLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/MobileStatusLabel"
+        android:layout_below="@+id/MobileStatusLabel"
+        android:layout_marginTop="20dp"
+        android:text="@string/IPv4Address"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/IPv4Address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/IPv4AddressLabel"
+        android:layout_alignRight="@+id/MobileStatus"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+   	<TextView
+	    android:id="@+id/IPv6AddressLabel"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/IPv4AddressLabel"
+	    android:layout_below="@+id/IPv4AddressLabel"
+	    android:layout_marginTop="20dp"
+	    android:text="@string/IPv6Address"
+	    android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView
+        android:id="@+id/IPv6Address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/IPv6AddressLabel"
+        android:layout_below="@+id/IPv6AddressLabel"
+        android:layout_marginTop="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="15sp" />
+	
+    <TextView
+        android:id="@+id/LastMessageLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/IPv6Address"
+        android:layout_below="@+id/IPv6Address"
+        android:layout_marginTop="20dp"
+        android:text="@string/LastMessage"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/LastMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/LastMessageLabel"
+        android:layout_below="@+id/LastMessageLabel"
+        android:layout_marginTop="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/BinaryStatusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LastMessage"
+        android:layout_alignLeft="@+id/LastMessage"
+        android:layout_marginTop="20dp"
+        android:text="@string/BinaryStatus"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+	<TextView
+        android:id="@+id/BinaryStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/BinaryStatusLabel"
+        android:layout_below="@+id/BinaryStatusLabel"
+        android:layout_marginTop="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>
