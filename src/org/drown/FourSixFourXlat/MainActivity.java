@@ -68,14 +68,15 @@ public class MainActivity extends Activity {
 			LastMessage.setText("No /system/xbin/su found");
 		}
 		
-		File clatd_conf = new File("/data/misc/clatd.conf");
-		if(!clatd_conf.exists()) {
+		File clatd_conf_copied = new File(InstallBinary.DATA_DIR+"clatd_conf_copied");
+		if(!clatd_conf_copied.exists()) {
 			Intent firstRun = new Intent(this, RunAsRoot.class);
 			firstRun.putExtra(RunAsRoot.EXTRA_STAGE_NAME, "Copy clatd.conf");
 			firstRun.putExtra(RunAsRoot.EXTRA_SCRIPT_CONTENTS, 
 					"#!/system/bin/sh\n" + 
 					"cp "+InstallBinary.DATA_DIR+"clatd.conf /data/misc/clatd.conf\n" +
-					"chmod 644 /data/misc/clatd.conf\n"
+					"chmod 644 /data/misc/clatd.conf\n" +
+					"touch "+InstallBinary.DATA_DIR+"clatd_conf_copied\n"
 					);
 			startService(firstRun);
 			LastMessage.setText("copied clatd.conf");
