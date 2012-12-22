@@ -101,7 +101,7 @@ public class Tethering {
 			// there's a /64 on the mobile interface, make a higher priority interface route on the tethered interface
 			Script.append("ip -6 route add "+MobileIPv6Address+"/64 dev "+interfaceName+" metric 1\n");
 		}
-		Script.append(InstallBinary.BIN_DIR+"radvd -C "+radvd_conf_file.getPath()+" -p "+InstallBinary.DATA_DIR+"radvd.pid\n");
+		Script.append(InstallBinary.BIN_DIR+"radvd -C "+radvd_conf_file.getPath()+" -p "+InstallBinary.DATA_DIR+"radvd.pid >/dev/null 2>&1\n");
 		Script.append("echo 1 >/proc/sys/net/ipv6/conf/all/forwarding\n");
 		Script.append("ip -6 route add default dev "+MobileInterfaceName+"\n");
 		
@@ -122,7 +122,7 @@ public class Tethering {
 		}
 		
 		Intent startTethering = new Intent(context, RunAsRoot.class);
-		startTethering.putExtra(RunAsRoot.EXTRA_STAGE_NAME, "start tethering");
+		startTethering.putExtra(RunAsRoot.EXTRA_STAGE_NAME, "start_tethering");
 		startTethering.putExtra(RunAsRoot.EXTRA_SCRIPT_CONTENTS, Script.toString());
 		context.startService(startTethering);
 		
@@ -149,7 +149,7 @@ public class Tethering {
 		}
 
 		Intent stopTethering = new Intent(context, RunAsRoot.class);
-		stopTethering.putExtra(RunAsRoot.EXTRA_STAGE_NAME, "stop tethering");
+		stopTethering.putExtra(RunAsRoot.EXTRA_STAGE_NAME, "stop_tethering");
 		stopTethering.putExtra(RunAsRoot.EXTRA_SCRIPT_CONTENTS, Script.toString());
 		context.startService(stopTethering);
 

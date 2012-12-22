@@ -9,5 +9,7 @@
     <string name="IPv6Address">IPv6 Address</string>
     <string name="IPv4Address">IPv4 Address</string>
     <string name="ClatStatus">Clat Status</string>
+    <string name="StdoutLabel">Stdout</string>
+    <string name="StderrLabel">Stderr</string>
 
 </resources>

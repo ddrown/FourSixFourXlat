@@ -120,6 +120,7 @@ public class ConnectivityReceiver extends BroadcastReceiver {
 	    			mobileStatus = ni.getDetailedState();
 	    			if(mobileStatus.toString().equals("CONNECTED")) {
 	    				Log.d("rescan", "connected");
+	    				// only start clat if we're on a V6-only network
 	    				if(MobileIPv4Address == null && MobileIPv6Address != null) {
 	    					Clat.startClat(context,MobileInterfaceName);
 	    				}

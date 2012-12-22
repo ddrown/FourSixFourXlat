@@ -13,7 +13,7 @@ import android.view.Menu;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	TextView TetherStatus, MobileStatus, LastMessage, BinaryStatus, IPv4Address, IPv6Address, ClatStatus;
+	TextView TetherStatus, MobileStatus, LastMessage, BinaryStatus, IPv4Address, IPv6Address, ClatStatus, Stdout, Stderr;
 	
 	private void UpdateText() {
 		TetherStatus.setText(Tethering.InterfaceName());
@@ -33,6 +33,11 @@ public class MainActivity extends Activity {
 			} else if(intent.getAction().equals(InstallBinary.ACTION_INSTALL_BINARY)) {
 				String message = intent.getStringExtra("message");
 				BinaryStatus.setText(message);
+			} else if(intent.getAction().equals(RunAsRoot.ACTION_ROOTSCRIPT_DONE)) {
+				String StageName = intent.getStringExtra(RunAsRoot.EXTRA_STAGE_NAME);
+				Stdout.setText(RunAsRoot.get_stdout(StageName));
+				Stderr.setText(RunAsRoot.get_stderr(StageName));
+				LastMessage.setText("Stage Script "+StageName+" completed");
 			}
 		}
 	};
@@ -50,6 +55,7 @@ public class MainActivity extends Activity {
 		IntentFilter messageFilter = new IntentFilter();
 		messageFilter.addAction(ConnectivityReceiver.ACTION_CONNECTIVITY_CHANGE);
 		messageFilter.addAction(InstallBinary.ACTION_INSTALL_BINARY);
+		messageFilter.addAction(RunAsRoot.ACTION_ROOTSCRIPT_DONE);
 		LocalBroadcastManager.getInstance(this).registerReceiver(mConnectionChanges, messageFilter);
 		
 		TetherStatus = (TextView) findViewById(R.id.TetherStatus);
@@ -59,6 +65,8 @@ public class MainActivity extends Activity {
 		IPv6Address = (TextView) findViewById(R.id.IPv6Address);
 		IPv4Address = (TextView) findViewById(R.id.IPv4Address);
 		ClatStatus = (TextView) findViewById(R.id.ClatStatus);
+		Stdout = (TextView) findViewById(R.id.Stdout);
+		Stderr = (TextView) findViewById(R.id.Stderr);
 		LastMessage.setText("");
 		BinaryStatus.setText("");
 		UpdateText();
@@ -66,12 +74,13 @@ public class MainActivity extends Activity {
 		File system_xbin_su = new File("/system/xbin/su");
 		if(!system_xbin_su.exists()) {
 			LastMessage.setText("No /system/xbin/su found");
+			return;
 		}
 		
 		File clatd_conf_copied = new File(InstallBinary.DATA_DIR+"clatd_conf_copied");
 		if(!clatd_conf_copied.exists()) {
 			Intent firstRun = new Intent(this, RunAsRoot.class);
-			firstRun.putExtra(RunAsRoot.EXTRA_STAGE_NAME, "Copy clatd.conf");
+			firstRun.putExtra(RunAsRoot.EXTRA_STAGE_NAME, "Copy_clatd.conf");
 			firstRun.putExtra(RunAsRoot.EXTRA_SCRIPT_CONTENTS, 
 					"#!/system/bin/sh\n" + 
 					"cp "+InstallBinary.DATA_DIR+"clatd.conf /data/misc/clatd.conf\n" +

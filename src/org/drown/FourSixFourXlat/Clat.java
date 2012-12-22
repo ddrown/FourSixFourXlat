@@ -71,11 +71,13 @@ public class Clat {
 		
 		StringBuffer Script = new StringBuffer();
 		Script.append("#!/system/bin/sh\n");
-		Script.append(InstallBinary.BIN_DIR+"clatd -i "+interfaceName+" &\n");
-		Script.append("echo $! >"+InstallBinary.DATA_DIR+"clatd.pid\n");
+		Script.append(InstallBinary.BIN_DIR+"clatd -i "+interfaceName+" >/dev/null 2>&1 &\n");
+		Script.append("CLATPID=$!\n");
+		Script.append("echo $CLATPID >"+InstallBinary.DATA_DIR+"clatd.pid\n");
+		Script.append("echo started clat, pid = $CLATPID\n");
 		
 		Intent startClat = new Intent(context, RunAsRoot.class);
-		startClat.putExtra(RunAsRoot.EXTRA_STAGE_NAME, "start clat");
+		startClat.putExtra(RunAsRoot.EXTRA_STAGE_NAME, "start_clat");
 		startClat.putExtra(RunAsRoot.EXTRA_SCRIPT_CONTENTS, Script.toString());
 		context.startService(startClat);
 	}
@@ -95,11 +97,13 @@ public class Clat {
 		
 		StringBuffer Script = new StringBuffer();
 		Script.append("#!/system/bin/sh\n");
-		Script.append("kill `cat "+InstallBinary.DATA_DIR+"clatd.pid`\n");
+		Script.append("CLATPID=`cat "+InstallBinary.DATA_DIR+"clatd.pid`\n");
+		Script.append("echo killing pid $CLATPID\n");
+		Script.append("kill $CLATPID\n");
 		Script.append("rm "+InstallBinary.DATA_DIR+"clatd.pid\n");
 		
 		Intent stopClat = new Intent(context, RunAsRoot.class);
-		stopClat.putExtra(RunAsRoot.EXTRA_STAGE_NAME, "stop clat");
+		stopClat.putExtra(RunAsRoot.EXTRA_STAGE_NAME, "stop_clat");
 		stopClat.putExtra(RunAsRoot.EXTRA_SCRIPT_CONTENTS, Script.toString());
 		context.startService(stopClat);
 	}

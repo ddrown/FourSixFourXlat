@@ -1,10 +1,17 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
     tools:context=".MainActivity" >
 
-    <TextView
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+	    
+	<TextView
         android:id="@+id/TetherStatusLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -139,4 +146,43 @@
         android:layout_marginTop="20dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-</RelativeLayout>
+	<TextView
+	    android:id="@+id/StdoutLabel"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/BinaryStatus"
+	    android:layout_alignLeft="@+id/BinaryStatus"
+	    android:layout_marginTop="20dp"
+	    android:text="@string/StdoutLabel"
+	    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	<TextView
+	    android:id="@+id/Stdout"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/StdoutLabel"
+	    android:layout_alignLeft="@+id/StdoutLabel"
+	    android:layout_marginTop="20dp"
+	    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	<TextView
+	    android:id="@+id/StderrLabel"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/Stdout"
+	    android:layout_alignLeft="@+id/Stdout"
+	    android:layout_marginTop="20dp"
+	    android:text="@string/StderrLabel"
+	    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	<TextView
+	    android:id="@+id/Stderr"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/StderrLabel"
+	    android:layout_alignLeft="@+id/StderrLabel"
+	    android:layout_marginTop="20dp"
+	    android:textAppearance="?android:attr/textAppearanceMedium" />
+			
+</RelativeLayout>	    
+</ScrollView>
