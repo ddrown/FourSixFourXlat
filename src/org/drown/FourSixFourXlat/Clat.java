@@ -71,6 +71,8 @@ public class Clat {
 		
 		StringBuffer Script = new StringBuffer();
 		Script.append("#!/system/bin/sh\n");
+		Script.append("cat "+InstallBinary.DATA_DIR+"clatd.conf >/data/misc/clatd.conf\n");
+		Script.append("chmod 644 /data/misc/clatd.conf\n");
 		Script.append(InstallBinary.BIN_DIR+"clatd -i "+interfaceName+" >/dev/null 2>&1 &\n");
 		Script.append("CLATPID=$!\n");
 		Script.append("echo $CLATPID >"+InstallBinary.DATA_DIR+"clatd.pid\n");
