@@ -83,6 +83,7 @@ public class MainActivity extends Activity {
 			firstRun.putExtra(RunAsRoot.EXTRA_STAGE_NAME, "Copy_clatd.conf");
 			firstRun.putExtra(RunAsRoot.EXTRA_SCRIPT_CONTENTS, 
 					"#!/system/bin/sh\n" + 
+					"echo `date` clatd.conf copy >>/data/misc/clatd.log\n" +
 					"cat "+InstallBinary.DATA_DIR+"clatd.conf >/data/misc/clatd.conf\n" +
 					"chmod 644 /data/misc/clatd.conf\n" +
 					"touch "+InstallBinary.DATA_DIR+"clatd_conf_copied\n"
