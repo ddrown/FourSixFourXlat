@@ -8,6 +8,9 @@ import java.io.InputStream;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 
 public class InstallBinary implements Runnable {
@@ -15,9 +18,11 @@ public class InstallBinary implements Runnable {
 	public final static String EXTRA_MESSAGE = "message";
 	public final static String DATA_DIR = "/data/data/org.drown.FourSixFourXlat/files/";
 	public final static String BIN_DIR = DATA_DIR + "bin/";
+	private final static String INSTALLED_BINARY_VERSION_PREFERENCE = "binaryVersion";
 	private File data_dir;
     private File bindir;
     private Context context;
+    private final static String BINARY_VERSION = "1.1";
 
 	private void sendInstallBinaryIntent(String message) {
 		Intent intent = new Intent(ACTION_INSTALL_BINARY);
@@ -39,6 +44,9 @@ public class InstallBinary implements Runnable {
 	
 	@Override
 	public void run() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String binaryVersion = prefs.getString(INSTALLED_BINARY_VERSION_PREFERENCE, "");
+
 		if(!data_dir.exists()) {
 			if(!data_dir.mkdir()) {
 				sendInstallBinaryIntent("mkdir "+data_dir.toString()+" failed");
@@ -50,29 +58,38 @@ public class InstallBinary implements Runnable {
             }
         }
 
-        install_radvd();
-        install_clatd();
+        install_radvd(binaryVersion);
+        install_clatd(binaryVersion);
         install_clatd_conf();
+        
+        // mark the current binary version as installed
+        Editor edit = prefs.edit();
+        edit.putString(INSTALLED_BINARY_VERSION_PREFERENCE, BINARY_VERSION);
+        edit.commit();
+        
         sendInstallBinaryIntent("finished");
 	}
 	
-	private void install_clatd() {
+	private void install_clatd(String binaryVersion) {
 		File clatd_path = new File(bindir, "clatd");
-		install_file(clatd_path, R.raw.clatd, "755", "clatd");
+		// if the installed binary version doesn't match the apk's version, force a re-install
+		install_file(clatd_path, R.raw.clatd, "755", "clatd", !BINARY_VERSION.equals(binaryVersion));
 	}
 	
-	private void install_radvd() {
+	private void install_radvd(String binaryVersion) {
         File radvd_path = new File(bindir, "radvd");
-        install_file(radvd_path, R.raw.radvd, "755", "radvd");
+        // if the installed binary version doesn't match the apk's version, force a re-install
+        install_file(radvd_path, R.raw.radvd, "755", "radvd", !BINARY_VERSION.equals(binaryVersion));
 	}
 	
 	private void install_clatd_conf() {
 		File clatd_conf_path = new File(data_dir, "clatd.conf");
-		install_file(clatd_conf_path, R.raw.clatd_conf, "644", "clatd.conf");
+		// don't over-write the config file
+		install_file(clatd_conf_path, R.raw.clatd_conf, "644", "clatd.conf", false);
 	}
 	
-	private void install_file(File path, int id, String mode, String filename) {
-        if(path.exists()) {
+	private void install_file(File path, int id, String mode, String filename, boolean forceInstall) {
+        if(path.exists() && !forceInstall) {
         	return;
         }
         
