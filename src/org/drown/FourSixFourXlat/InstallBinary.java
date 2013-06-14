@@ -22,7 +22,7 @@ public class InstallBinary implements Runnable {
 	private File data_dir;
     private File bindir;
     private Context context;
-    private final static String BINARY_VERSION = "1.1";
+    private final static String BINARY_VERSION = "1.2";
 
 	private void sendInstallBinaryIntent(String message) {
 		Intent intent = new Intent(ACTION_INSTALL_BINARY);
